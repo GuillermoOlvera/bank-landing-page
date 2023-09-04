@@ -2,7 +2,6 @@
 
 ///////////////////////////////////////
 // Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
@@ -30,6 +29,17 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+// Page navigation
+document.querySelector('.nav__links').addEventListener('click', function (event) {
+  event.preventDefault();
+  if (event.target.classList.contains('nav__link')) {
+    event.preventDefault();
+    const id = event.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
 
 // Creating and inserting elements.
 const header = document.querySelector('header');
