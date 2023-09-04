@@ -44,3 +44,21 @@ header.append(message);
 document.querySelector('.btn--close-cookie').addEventListener('click', function () {
   message.parentElement.removeChild(message);
 });
+
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+/* Scroll */
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  window.scrollTo({ left: s1coords.left, top: s1coords.top, behavior: 'smooth' });
+});
+
+// section1.scrollIntoView({ behavior: 'smooth' });
+
+/* Scroll end */
