@@ -152,6 +152,83 @@ const imgObserver = new IntersectionObserver(loadImg, {
 
 imgTargets.forEach(image => imgObserver.observe(image));
 
+// Slider
+const slider = function () {
+  const slides = document.querySelectorAll('.slide');
+  const buttonLeft = document.querySelector('.slider__btn--left');
+  const buttonRigth = document.querySelector('.slider__btn--right');
+  const dotContainer = document.querySelector('.dots');
+
+  let currentSlide = 0;
+  const maxSlide = slides.length;
+
+  // Functions
+  const createDots = function () {
+    slides.forEach(function (slide, index) {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${index}"></button>`
+      );
+    });
+  };
+
+  const activeDot = function (slide) {
+    document.querySelectorAll('.dots__dot').forEach(dot => dot.classList.remove('dots__dot--active'));
+    document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add('dots__dot--active');
+  }
+
+  const goToSlide = function (slide) {
+    slides.forEach((s, index) => (s.style.transform = `translateX(${100 * (index - slide)}%)`));
+  };
+
+  // Next slide
+  const nextSlide = function () {
+    if (currentSlide === maxSlide - 1) {
+      currentSlide = 0;
+    } else {
+      currentSlide++;
+    }
+    goToSlide(currentSlide);
+    activeDot(currentSlide);
+  }
+
+  const prevSlide = function () {
+    if (currentSlide === 0) {
+      currentSlide = maxSlide - 1;
+    } else {
+      currentSlide--;
+    }
+    goToSlide(currentSlide);
+    activeDot(currentSlide);
+  }
+
+  const init = function () {
+    goToSlide(0);
+    createDots();
+    activeDot(0);
+  }
+
+  init()
+
+  // Event handler
+  buttonRigth.addEventListener('click', nextSlide);
+  buttonLeft.addEventListener('click', prevSlide);
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'ArrowLeft') prevSlide();
+    event.key === 'ArrowRigth' && nextSlide();
+  });
+
+  dotContainer.addEventListener('click', function (event) {
+    if (event.target.classList.contains('dots__dot')) {
+      const { slide } = event.target.dataset;
+      goToSlide(slide);
+      activeDot(slide);
+    }
+  });
+}
+
+slider();
 // Creating and inserting elements.
 const message = document.createElement('div');
 
